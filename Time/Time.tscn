@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=3 uid="uid://dy812lkrku7fx"]
+
+[ext_resource type="Script" path="res://Time/Time.gd" id="1_h8cak"]
+[ext_resource type="Texture2D" uid="uid://ijt1uey6eqk6" path="res://icon.svg" id="2_bticf"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u5s18"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_bticf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y2mw2"]
+size = Vector2(126, 127)
+
+[sub_resource type="GDScript" id="GDScript_j7dgl"]
+script/source = "extends CollisionShape2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(_delta):
+	pass
+"
+
+[node name="Time" type="CharacterBody2D"]
+position = Vector2(911, 539)
+script = ExtResource("1_h8cak")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_u5s18")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_y2mw2")
+script = SubResource("GDScript_j7dgl")

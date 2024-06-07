@@ -1,0 +1,16 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1717767812
+icon64x64.png::CompressedTexture2D::1060490751427127519::1717767724::1717767812::1::::<><>::
+icon.svg::CompressedTexture2D::581291260173160387::1717767724::1717767812::1::::<><>::
+README.md::TextFile::-1::1717767674::0::1::::<><>::
+::res://Global/::1717767724
+enumDirections.gd::GDScript::-1::1717767724::0::1::::<>RefCounted<>::
+::res://Levels/::1717767724
+level_1.gd::GDScript::-1::1717767724::0::1::::<>Node2D<>::
+level_1.tscn::PackedScene::980721993206795399::1717767724::0::1::::<><>::uid://dy812lkrku7fx::::res://Time/Time.tscn<>res://Levels/level_1.gd<>uid://ceubwd0imgaij::::res://Tiles/Square-white.svg.png
+::res://Tiles/::1717767724
+Square-white.svg.png::CompressedTexture2D::5094984498048117705::1717767724::1717767812::1::::<><>::
+tiles.jpg::CompressedTexture2D::7764016955660846206::1717767724::1717767812::1::::<><>::
+::res://Time/::1717767724
+Time.gd::GDScript::-1::1717767724::0::1::::<>CharacterBody2D<>::
+Time.tscn::PackedScene::8913546216514897825::1717767724::0::1::::<><>::res://Time/Time.gd<>uid://ijt1uey6eqk6::::res://icon.svg
