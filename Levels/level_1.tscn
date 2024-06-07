@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://n8cl3hsso78v"]
+[gd_scene load_steps=7 format=3 uid="uid://n8cl3hsso78v"]
 
 [ext_resource type="PackedScene" uid="uid://dy812lkrku7fx" path="res://Time/Time.tscn" id="1_1hmbi"]
 [ext_resource type="Script" path="res://Levels/level_1.gd" id="1_mvvse"]
 [ext_resource type="Texture2D" uid="uid://ceubwd0imgaij" path="res://Tiles/Square-white.svg.png" id="1_nixfc"]
+[ext_resource type="PackedScene" uid="uid://c70xnv4sxnj0q" path="res://Objects/Flipper.tscn" id="2_hqohn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_va2yk"]
 texture = ExtResource("1_nixfc")
@@ -87,7 +88,11 @@ layer_0/tile_data = PackedInt32Array(131074, 65538, 3, 131075, 65538, 3, 131076,
 layer_1/name = "Obstacles"
 layer_1/tile_data = PackedInt32Array(65537, 196610, 0, 196613, 196610, 0, 196614, 196610, 0, 196615, 196610, 0, 196616, 196610, 0, 65545, 196610, 0, 65544, 196610, 0, 65543, 196610, 0, 65542, 196610, 0, 65541, 196610, 0, 65540, 196610, 0, 65539, 196610, 0, 65538, 196610, 0, 196610, 458754, 2, 196611, 458754, 2, 196612, 458754, 2, 131081, 458754, 2, 131073, 458754, 2, 196609, 458754, 3, 196617, 458754, 3)
 
+[node name="Flipper" parent="." instance=ExtResource("2_hqohn")]
+position = Vector2(838, 320)
+
 [node name="Time" parent="." instance=ExtResource("1_1hmbi")]
 position = Vector2(320, 321)
 
+[connection signal="body_entered" from="Flipper" to="Time" method="_on_flipper_body_entered"]
 [connection signal="is_moving" from="Time" to="." method="_on_time_is_moving"]

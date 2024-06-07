@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://c70xnv4sxnj0q"]
+
+[ext_resource type="Script" path="res://Objects/Flipper.gd" id="1_c3xfg"]
+[ext_resource type="Texture2D" uid="uid://3mogmoi23i47" path="res://Mulesoft-128x128pxl.png" id="1_u6fhe"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7231r"]
+size = Vector2(128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sw7uu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_u6fhe")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Flipper" type="Area2D"]
+script = ExtResource("1_c3xfg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_7231r")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_sw7uu")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

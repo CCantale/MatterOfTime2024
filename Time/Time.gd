@@ -49,3 +49,8 @@ func decreaseSand():
 		
 func flip():
 	self.sand = MAX_SAND - self.sand
+	
+	
+
+func _on_flipper_body_entered(body):
+	flip()
