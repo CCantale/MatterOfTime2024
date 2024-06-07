@@ -5,7 +5,8 @@ var step : int = 0
 
 signal is_moving(position : Vector2, tileLength : int, direction : int)
 
-var sand = 5
+var MAX_SAND = 5
+var sand = MAX_SAND
 
 func _ready():
 	var defaultFrame : Texture2D = $AnimatedSprite2D.sprite_frames.get_frame_texture("default", 0)
@@ -45,3 +46,6 @@ func decreaseSand():
 	self.sand -= 1
 	if (self.sand == 0):
 		get_tree().quit()
+		
+func flip():
+	self.sand = MAX_SAND - self.sand

@@ -1,2 +1,5 @@
 res://Levels/level_1.tscn
 res://Time/Time.gd
+res://Objects/Flipper.tscn
+res://Objects/Flipper.gd
+res://Levels/level_1.gd
