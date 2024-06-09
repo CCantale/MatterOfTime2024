@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://n8cl3hsso78v"]
+[gd_scene load_steps=8 format=3 uid="uid://n8cl3hsso78v"]
 
 [ext_resource type="PackedScene" uid="uid://dy812lkrku7fx" path="res://Time/Time.tscn" id="1_1hmbi"]
 [ext_resource type="Script" path="res://Levels/level_1.gd" id="1_mvvse"]
@@ -77,22 +77,33 @@ texture_region_size = Vector2i(128, 128)
 tile_size = Vector2i(128, 128)
 sources/2 = SubResource("TileSetAtlasSource_va2yk")
 
+[sub_resource type="Curve2D" id="Curve2D_5w0il"]
+
 [node name="Level 1" type="Node2D"]
 script = ExtResource("1_mvvse")
 
 [node name="TileMap" type="TileMap" parent="."]
+position = Vector2(1, 0)
 tile_set = SubResource("TileSet_usguo")
 rendering_quadrant_size = 1
 format = 2
-layer_0/tile_data = PackedInt32Array(131074, 65538, 3, 131075, 65538, 3, 131076, 65538, 3, 131077, 65538, 3, 131078, 65538, 3, 131079, 65538, 3, 131080, 65538, 3)
+layer_0/tile_data = PackedInt32Array(131074, 327682, 3, 131075, 327682, 3, 131076, 327682, 3, 131077, 327682, 3, 131078, 327682, 3, 131079, 327682, 3, 131081, 327682, 6, 131080, 327682, 3, 65545, 196610, 2, 9, 196610, 2, 10, 196610, 2, 11, 196610, 2, 12, 196610, 2, 13, 196610, 2, 14, 196610, 2, 131082, 196610, 2, 131083, 196610, 2, 131084, 196610, 2, 131085, 196610, 2, 131086, 196610, 2, 65550, 393218, 1)
 layer_1/name = "Obstacles"
-layer_1/tile_data = PackedInt32Array(65537, 196610, 0, 196613, 196610, 0, 196614, 196610, 0, 196615, 196610, 0, 196616, 196610, 0, 65545, 196610, 0, 65544, 196610, 0, 65543, 196610, 0, 65542, 196610, 0, 65541, 196610, 0, 65540, 196610, 0, 65539, 196610, 0, 65538, 196610, 0, 196610, 458754, 2, 196611, 458754, 2, 196612, 458754, 2, 131081, 458754, 2, 131073, 458754, 2, 196609, 458754, 3, 196617, 458754, 3)
+layer_1/tile_data = PackedInt32Array(65537, 196610, 0, 196613, 196610, 0, 65544, 196610, 0, 65543, 196610, 0, 65542, 196610, 0, 65541, 196610, 0, 65540, 196610, 0, 65539, 196610, 0, 65538, 196610, 0, 196610, 458754, 2, 196611, 458754, 2, 196612, 458754, 2, 131073, 458754, 2, 196609, 458754, 3, 196614, 458754, 3, 196615, 458754, 3, 196616, 458754, 3, 196617, 458754, 3, 8, 458754, 1, -65528, 458754, 1, -65527, 458754, 1, -65526, 458754, 1, -65525, 458754, 1, -65524, 458754, 1, -65523, 458754, 1, -65522, 458754, 1, -65521, 458754, 1, 15, 458754, 1, 65551, 458754, 1, 131087, 458754, 1, 196623, 458754, 1, 196618, 458754, 1, 196619, 458754, 1, 196620, 458754, 1, 196621, 458754, 1, 196622, 458754, 1, 65546, 458754, 1, 65547, 458754, 1, 65548, 458754, 1, 65549, 458754, 1)
 
 [node name="Flipper" parent="." instance=ExtResource("2_hqohn")]
 position = Vector2(838, 320)
 
 [node name="Time" parent="." instance=ExtResource("1_1hmbi")]
 position = Vector2(320, 321)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(200, 2.08165e-12)
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_5w0il")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
 
 [connection signal="body_entered" from="Flipper" to="Time" method="_on_flipper_body_entered"]
 [connection signal="is_moving" from="Time" to="." method="_on_time_is_moving"]
