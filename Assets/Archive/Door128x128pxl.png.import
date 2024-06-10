@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ceubwd0imgaij"
-path="res://.godot/imported/Square-white.svg.png-b031b0b9995c6d9160c76f3b78f6b18d.ctex"
+uid="uid://bnppsr1k4xnmy"
+path="res://.godot/imported/Door128x128pxl.png-4186759b85c2366f20d8bb8157fcfb8b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Tiles/Square-white.svg.png"
-dest_files=["res://.godot/imported/Square-white.svg.png-b031b0b9995c6d9160c76f3b78f6b18d.ctex"]
+source_file="res://Assets/Archive/Door128x128pxl.png"
+dest_files=["res://.godot/imported/Door128x128pxl.png-4186759b85c2366f20d8bb8157fcfb8b.ctex"]
 
 [params]
 

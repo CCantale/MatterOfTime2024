@@ -11,9 +11,9 @@ config_version=5
 [application]
 
 config/name="Matter of Time"
-run/main_scene="res://Levels/level_1.tscn"
+run/main_scene="res://Main/World.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://Assets/Archive/icon.svg"
 
 [display]
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://e3c4i65feqyv"
-path="res://.godot/imported/Mulesoft-128x128pxl.png-0aa85d944ca8a0c3dd5e386e4fed3cbf.ctex"
+path="res://.godot/imported/Mulesoft-128x128pxl.png-a18d3d4af58536c92dd68a5824b3fad4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Mulesoft-128x128pxl.png"
-dest_files=["res://.godot/imported/Mulesoft-128x128pxl.png-0aa85d944ca8a0c3dd5e386e4fed3cbf.ctex"]
+source_file="res://Assets/Archive/Mulesoft-128x128pxl.png"
+dest_files=["res://.godot/imported/Mulesoft-128x128pxl.png-a18d3d4af58536c92dd68a5824b3fad4.ctex"]
 
 [params]
 

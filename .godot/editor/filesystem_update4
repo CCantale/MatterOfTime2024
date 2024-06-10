@@ -1,5 +1,10 @@
-res://Levels/level_1.tscn
+res://Objects/Door.tscn
 res://Time/Time.gd
+res://Time/Time.tscn
+res://Levels/level_1.tscn
 res://Objects/Flipper.tscn
 res://Objects/Flipper.gd
-res://Levels/level_1.gd
+res://Levels/World.tscn
+res://Main/World.tscn
+res://Main/World.gd
+res://Main/TileMap.gd
