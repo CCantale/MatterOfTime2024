@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dy812lkrku7fx"]
+[gd_scene load_steps=7 format=3 uid="uid://dy812lkrku7fx"]
 
 [ext_resource type="Script" path="res://Time/Time.gd" id="1_h8cak"]
-[ext_resource type="Texture2D" uid="uid://ijt1uey6eqk6" path="res://icon.svg" id="2_bticf"]
+[ext_resource type="Texture2D" uid="uid://ijt1uey6eqk6" path="res://Assets/Archive/icon.svg" id="2_bticf"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_u5s18"]
 animations = [{
@@ -31,6 +31,9 @@ func _process(_delta):
 	pass
 "
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qijuy"]
+size = Vector2(128, 128)
+
 [node name="Time" type="CharacterBody2D"]
 position = Vector2(911, 539)
 script = ExtResource("1_h8cak")
@@ -42,3 +45,10 @@ sprite_frames = SubResource("SpriteFrames_u5s18")
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_y2mw2")
 script = SubResource("GDScript_j7dgl")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_qijuy")
+
+[connection signal="body_shape_entered" from="Area2D" to="." method="_on_area_2d_body_shape_entered"]

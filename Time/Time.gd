@@ -1,16 +1,25 @@
 extends CharacterBody2D
 
 const dir = preload("res://Global/enumDirections.gd")
-var step : int = 0
 
 signal is_moving(position : Vector2, tileLength : int, direction : int)
+signal died()
 
+const INITIAL_POSITION = Vector2(320, 320)
 var MAX_SAND = 5
-var sand = MAX_SAND
+var sand: int
+var step : int
+var isCollecting: bool
 
 func _ready():
 	var defaultFrame : Texture2D = $AnimatedSprite2D.sprite_frames.get_frame_texture("default", 0)
 	self.step = defaultFrame.get_width()
+	reset()
+	
+func reset():
+	self.position = INITIAL_POSITION
+	self.sand = MAX_SAND
+	self.isCollecting = false
 	
 func _process(_delta):
 	checkIfMoving()
@@ -41,16 +50,39 @@ func checkIfMoving():
 			self.position.x += modX
 			self.position.y += modY
 			decreaseSand()
-			
+			isCollecting = false
+			print(self.sand)
+
 func decreaseSand():
 	self.sand -= 1
 	if (self.sand == 0):
-		get_tree().quit()
-		
-func flip():
-	self.sand = MAX_SAND - self.sand
-	
-	
+		await get_tree().create_timer(0.1).timeout
+		if (isCollecting == false):
+			died.emit()
 
-func _on_flipper_body_entered(body):
+func flip():
+	isCollecting = true
+	self.sand = MAX_SAND - self.sand
+
+func _on_flipper_body_entered(_body):
 	flip()
+
+func enterDoor():
+	isCollecting = true
+	self.sand = MAX_SAND
+
+func _on_area_2d_body_shape_entered(body_rid: RID, body: Node2D, _body_shape_index: int, _local_shape_index: int) -> void:
+	if (body is TileMap):
+		var tileMap = body
+		var tileCoordinates = body.get_coords_for_body_rid(body_rid)
+		for layer in tileMap.get_layers_count():
+			var tileData = tileMap.get_cell_tile_data(layer, tileCoordinates)
+			if (!tileData):
+				continue
+			var tileType: StringName = tileData.get_custom_data_by_layer_id(0)
+			if (tileType == "flipper"):
+				#replace the tile with an empty tile
+				tileMap.set_cell(layer, tileCoordinates, 0, Vector2i(1, 0), 3)
+				flip()
+			elif (tileType == "door"):
+				enterDoor()
