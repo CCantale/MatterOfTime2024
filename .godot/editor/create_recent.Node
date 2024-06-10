@@ -1,10 +1,7 @@
-<<<<<<< HEAD
+Camera2D
 PathFollow2D
 Path2D
-Camera2D
 AnimatedSprite2D
-=======
->>>>>>> dev
 CollisionShape2D
 Area2D
 AnimatedSprite2D
