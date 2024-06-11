@@ -1,9 +1,10 @@
 extends CharacterBody2D
 
-const dir = preload("res://Global/enumDirections.gd")
+const dir = preload("res://Scripts/enumDirections.gd")
 
 signal is_moving(position : Vector2, tileLength : int, direction : int)
 signal died()
+signal entered_door(position: Vector2)
 
 const INITIAL_POSITION = Vector2(320, 320)
 var MAX_SAND = 5
@@ -14,7 +15,6 @@ var isCollecting: bool
 func _ready():
 	var defaultFrame : Texture2D = $AnimatedSprite2D.sprite_frames.get_frame_texture("default", 0)
 	self.step = defaultFrame.get_width()
-	reset()
 	
 func reset():
 	self.position = INITIAL_POSITION
@@ -51,7 +51,7 @@ func checkIfMoving():
 			self.position.y += modY
 			decreaseSand()
 			isCollecting = false
-			print(self.sand)
+			print(self.position)
 
 func decreaseSand():
 	self.sand -= 1
@@ -70,6 +70,7 @@ func _on_flipper_body_entered(_body):
 func enterDoor():
 	isCollecting = true
 	self.sand = MAX_SAND
+	entered_door.emit(self.position)
 
 func _on_area_2d_body_shape_entered(body_rid: RID, body: Node2D, _body_shape_index: int, _local_shape_index: int) -> void:
 	if (body is TileMap):
