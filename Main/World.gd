@@ -21,6 +21,8 @@ func _ready():
 func reset():
 	$Time.reset()
 	$TileMap.reset()
+	if ($cameraAnimation.is_playing()):
+		$cameraAnimation.stop()
 	$Camera2D.position = INITIAL_CAMERA_POSITION
 	$Camera2D.zoom.x = INITIAL_CAMERA_ZOOM
 	$Camera2D.zoom.y = INITIAL_CAMERA_ZOOM
@@ -34,10 +36,7 @@ func moveCamera():
 		return
 	var animationName = self.cam.cameraMovements[timeLastPosition]
 	print(animationName)
-	if (self.cam.playForward[timeLastPosition] == true):
-		$cameraAnimation.play(animationName)
-	else:
-		$cameraAnimation.play_backwards(animationName)
+	$cameraAnimation.play(animationName)
 
 func _on_time_is_moving(timePosition, tileLength, direction):
 	var destination : Vector2
