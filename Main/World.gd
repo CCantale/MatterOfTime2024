@@ -3,7 +3,7 @@ extends Node2D
 const dir = preload("res://Scripts/enumDirections.gd")
 const cam = preload("res://Scripts/cameraMovements.gd")
 
-const INITIAL_CAMERA_POSITION = Vector2(702.74, 346.141)
+const INITIAL_CAMERA_POSITION = Vector2(702.74, 246.141)
 const INITIAL_CAMERA_ZOOM = 1.7
 var obstacles: Array[Vector2i] = []
 var timeCanMove = true
@@ -21,20 +21,20 @@ func _ready():
 func reset():
 	$Time.reset()
 	$TileMap.reset()
-	#$Camera2D.position = INITIAL_CAMERA_POSITION
-	$Time/Camera2D.zoom.x = INITIAL_CAMERA_ZOOM
-	$Time/Camera2D.zoom.y = INITIAL_CAMERA_ZOOM
+	$Camera2D.position = INITIAL_CAMERA_POSITION
+	$Camera2D.zoom.x = INITIAL_CAMERA_ZOOM
+	$Camera2D.zoom.y = INITIAL_CAMERA_ZOOM
 
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().quit()
 
-func moveCamera(timePosition: Vector2):
-	if (!cam.cameraMovements.has(timePosition)):
+func moveCamera():
+	if (!cam.cameraMovements.has(timeLastPosition)):
 		return
-	var animationName = self.cam.cameraMovements[timePosition]
-	
-	if ($cameraAnimation.current_animation == self.cam.playForward[animationName]):
+	var animationName = self.cam.cameraMovements[timeLastPosition]
+	print(animationName)
+	if (self.cam.playForward[timeLastPosition] == true):
 		$cameraAnimation.play(animationName)
 	else:
 		$cameraAnimation.play_backwards(animationName)
@@ -63,6 +63,5 @@ func _on_time_is_moving(timePosition, tileLength, direction):
 func _on_time_died():
 	reset()
 
-
-func _on_time_entered_door(timePosition: Vector2):
-	moveCamera(timePosition)
+func _on_time_entered_camera_tile():
+	moveCamera()
