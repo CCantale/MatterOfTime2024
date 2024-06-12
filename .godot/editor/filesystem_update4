@@ -1,2 +1,4 @@
 res://Main/World.tscn
 res://Time/Time.tscn
+res://Scripts/cameraMovements.gd
+res://Main/World.gd
