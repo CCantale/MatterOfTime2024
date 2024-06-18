@@ -221,14 +221,14 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath(".:timeCanMove")
+tracks/2/path = NodePath("Time:cutscene_is_running")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [true]
+"values": [false]
 }
 
 [sub_resource type="Animation" id="Animation_3hkv8"]
@@ -261,14 +261,14 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath(".:timeCanMove")
+tracks/2/path = NodePath("Time:cutscene_is_running")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0, 1.3),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [false, true]
+"values": [true, false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nd5ho"]
@@ -284,6 +284,7 @@ _data = {
 [node name="World" type="Node2D"]
 position = Vector2(78, 525)
 script = ExtResource("1_kwi8g")
+timeCanMove = false
 
 [node name="TileMap" type="TileMap" parent="."]
 position = Vector2(2, 0)
