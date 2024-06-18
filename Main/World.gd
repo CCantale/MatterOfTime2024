@@ -33,7 +33,6 @@ func reset():
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().quit()
-	print($Camera2D.position)
 
 func moveCamera():
 	var animationName: String
@@ -46,6 +45,7 @@ func moveCamera():
 	$Time/RemoteTransform2D.remote_path = ""
 	animationName = self.cam.cameraMovements[timeLastPosition]
 	$cameraAnimation.play(animationName)
+	print(animationName)
 
 func handlePovCamera(animationName: String):
 	var remoteTransform = $Time/RemoteTransform2D
@@ -74,6 +74,8 @@ func _on_time_is_moving(timePosition, tileLength, direction):
 	else:
 		timeLastPosition = timePosition
 		timeCanMove = true
+	#prints camera position at every step
+	#print("camera", $Camera2D.position)
 
 func _on_time_died():
 	reset()
