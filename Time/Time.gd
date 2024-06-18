@@ -8,6 +8,9 @@ signal entered_door(position: Vector2)
 signal entered_camera_tile()
 
 const INITIAL_POSITION = Vector2(320, 320)
+
+@export var cutscene_is_running: bool
+
 var MAX_SAND = 5
 var sand: int
 var step : int
@@ -25,6 +28,7 @@ func reset():
 	#This one prevents the character to trigger actions multiple times
 	#when many special tiles are stacked in the same place
 	self.stepped_on_tile = false
+	self.cutscene_is_running = false
 	
 func _process(_delta):
 	checkIfMoving()
@@ -52,7 +56,7 @@ func checkIfMoving():
 	if (inputReceived == true):
 		self.stepped_on_tile = false
 		is_moving.emit(self.position, self.step, direction)
-		if (self.get_parent().timeCanMove):
+		if (self.get_parent().timeCanMove and not self.cutscene_is_running):
 			self.position.x += modX
 			self.position.y += modY
 			decreaseSand()

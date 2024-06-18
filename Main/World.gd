@@ -5,9 +5,10 @@ const cam = preload("res://Scripts/cameraMovements.gd")
 
 const INITIAL_CAMERA_POSITION = Vector2(702.74, 246.141)
 const INITIAL_CAMERA_ZOOM = 1.7
-const INITIAL_POVCAMERA_ZOOM = 1.4
+
+@export var timeCanMove = true
+
 var obstacles: Array[Vector2i] = []
-var timeCanMove = true
 var timeLastPosition : Vector2
 
 func _ready():
@@ -22,40 +23,40 @@ func _ready():
 func reset():
 	$Time.reset()
 	$TileMap.reset()
+	$Time/RemoteTransform2D.remote_path = ""
 	if ($cameraAnimation.is_playing()):
 		$cameraAnimation.stop()
 	$Camera2D.position = INITIAL_CAMERA_POSITION
 	$Camera2D.zoom.x = INITIAL_CAMERA_ZOOM
 	$Camera2D.zoom.y = INITIAL_CAMERA_ZOOM
-	$Time/povCamera.zoom.x = INITIAL_POVCAMERA_ZOOM
-	$Time/povCamera.zoom.y = INITIAL_POVCAMERA_ZOOM
 
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().quit()
+	print($Camera2D.position)
 
 func moveCamera():
+	var animationName: String
+	
 	if (cam.povCamera.has(timeLastPosition)):
 		handlePovCamera(cam.povCamera[timeLastPosition])
 		return
 	if (!cam.cameraMovements.has(timeLastPosition)):
 		return
-	var animationName = self.cam.cameraMovements[timeLastPosition]
-	print(animationName)
+	$Time/RemoteTransform2D.remote_path = ""
+	animationName = self.cam.cameraMovements[timeLastPosition]
 	$cameraAnimation.play(animationName)
 
-func handlePovCamera(_animation: String):
-	$Camera2D.reparent($Time, true)
-	await self.get_tree().create_timer(4).timeout
-	$Time/Camera2D.reparent($World, true)
-	#$cameraAnimation.play(animation)
-	#$Time/povCamera.enabled = true
-	#$Time/povCamera.make_current()
-	#$Camera2D.enabled = false
+func handlePovCamera(animationName: String):
+	var remoteTransform = $Time/RemoteTransform2D
+	
+	$cameraAnimation.play(animationName)
+	await $cameraAnimation.animation_finished
+	remoteTransform.remote_path = "../../Camera2D"
 	
 func _on_time_is_moving(timePosition, tileLength, direction):
 	var destination : Vector2
-	
+
 	if (direction == dir.UP):
 		destination = timePosition - Vector2(0, tileLength)
 	elif (direction == dir.DOWN):
