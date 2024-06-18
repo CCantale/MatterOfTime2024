@@ -14,6 +14,7 @@ var timeLastPosition : Vector2
 func _ready():
 	var obstaclesLayer : int
 	
+	DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 	for layerID in $TileMap.get_layers_count():
 		if ($TileMap.get_layer_name(layerID) == "Obstacles"):
 			obstaclesLayer = layerID
@@ -33,6 +34,7 @@ func reset():
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().quit()
+	#print("camera pos: ", $Camera2D.position)
 
 func moveCamera():
 	var animationName: String
@@ -40,12 +42,13 @@ func moveCamera():
 	if (cam.povCamera.has(timeLastPosition)):
 		handlePovCamera(cam.povCamera[timeLastPosition])
 		return
+	$Time/RemoteTransform2D.remote_path = ""
 	if (!cam.cameraMovements.has(timeLastPosition)):
 		return
-	$Time/RemoteTransform2D.remote_path = ""
 	animationName = self.cam.cameraMovements[timeLastPosition]
 	$cameraAnimation.play(animationName)
-	print(animationName)
+	#To check that the animation called is the right one
+	#print(animationName)
 
 func handlePovCamera(animationName: String):
 	var remoteTransform = $Time/RemoteTransform2D

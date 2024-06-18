@@ -8,5 +8,5 @@ const cameraMovements = {
 }
 	
 const povCamera = {
-	Vector2(2880, 192): "Transition 3-4"
+	Vector2(2752, 192): "Transition 3-4"
 }
