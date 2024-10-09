@@ -34,7 +34,8 @@ func reset():
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().quit()
-	#print("camera pos: ", $Camera2D.position)
+	print("camera pos: ", $Camera2D.position)
+	print("camera offset: ", $Camera2D.offset)
 
 func moveCamera():
 	var animationName: String

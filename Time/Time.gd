@@ -61,6 +61,7 @@ func checkIfMoving():
 			self.position.y += modY
 			decreaseSand()
 			isCollecting = false
+			#debug position print
 			print("time pos: ", self.position)
 
 func decreaseSand():
