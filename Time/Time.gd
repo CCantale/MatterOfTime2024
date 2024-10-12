@@ -3,6 +3,7 @@ extends CharacterBody2D
 const dir = preload("res://Scripts/enumDirections.gd")
 
 signal is_moving(position : Vector2, tileLength : int, direction : int)
+signal is_jumping(currentPosition, jumpLength, direction, is_a_jump)
 signal died()
 signal entered_door(position: Vector2)
 signal entered_camera_tile()
@@ -16,6 +17,7 @@ var sand: int
 var step : int
 var isCollecting: bool
 var stepped_on_tile: bool
+var last_arrow_key_pressed: int
 
 func _ready():
 	var defaultFrame : Texture2D = $AnimatedSprite2D.sprite_frames.get_frame_texture("default", 0)
@@ -36,36 +38,36 @@ func _process(_delta):
 func checkIfMoving():
 	var inputReceived = true
 	var direction = -1
-	var modX = 0
-	var modY = 0
 	
+	if (self.cutscene_is_running):
+		return
 	if Input.is_action_just_pressed("ui_up"):
-		modY = -1 * self.step
 		direction = dir.UP
 	elif Input.is_action_just_pressed("ui_down"):
-		modY = self.step
 		direction = dir.DOWN
 	elif Input.is_action_just_pressed("ui_left"):
-		modX = -1 * self.step
 		direction = dir.LEFT
 	elif Input.is_action_just_pressed("ui_right"):
-		modX = self.step
 		direction = dir.RIGHT
 	else:
 		inputReceived = false
 	if (inputReceived == true):
+		last_arrow_key_pressed = direction
 		self.stepped_on_tile = false
-		is_moving.emit(self.position, self.step, direction)
-		if (self.get_parent().timeCanMove and not self.cutscene_is_running):
-			self.position.x += modX
-			self.position.y += modY
-			decreaseSand()
-			isCollecting = false
-			#debug position print
-			print("time pos: ", self.position)
+		is_moving.emit(self.position, self.step, direction, false)
+
+func move(destination: Vector2, is_a_jump: bool):
+	self.position = destination
+	if (is_a_jump == false):
+		decreaseSand()
+	isCollecting = false
+	#debug position print
+	print("time pos: ", self.position)
 
 func decreaseSand():
 	self.sand -= 1
+	if (self.sand < 0):
+		self.sand = 0
 	if (self.sand == 0):
 		await get_tree().create_timer(0.1).timeout
 		if (isCollecting == false):
@@ -75,12 +77,14 @@ func flip():
 	isCollecting = true
 	self.sand = MAX_SAND - self.sand
 
-func _on_flipper_body_entered(_body):
-	flip()
-
 func enterDoor():
 	isCollecting = true
 	self.sand = MAX_SAND
+	
+func jump() -> void:
+	self.stepped_on_tile = false
+	is_moving.emit(self.position, self.step * 2, self.last_arrow_key_pressed, true)
+
 
 func _on_area_2d_body_shape_entered(body_rid: RID, body: Node2D, _body_shape_index: int, _local_shape_index: int) -> void:
 	if (body is TileMap and self.stepped_on_tile == false):
@@ -98,5 +102,7 @@ func _on_area_2d_body_shape_entered(body_rid: RID, body: Node2D, _body_shape_ind
 				flip()
 			if (tileType == "door"):
 				enterDoor()
+			if (tileType == "jumper"):
+				jump()
 			if (tileType == "hidden_camera"):
 				entered_camera_tile.emit()

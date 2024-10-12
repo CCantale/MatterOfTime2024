@@ -30,12 +30,12 @@ func reset():
 	$Camera2D.position = INITIAL_CAMERA_POSITION
 	$Camera2D.zoom.x = INITIAL_CAMERA_ZOOM
 	$Camera2D.zoom.y = INITIAL_CAMERA_ZOOM
+	$Camera2D.offset.x = 0
+	$Camera2D.offset.y = 0
 
 func _process(_delta):
 	if Input.is_action_just_pressed("ui_cancel"):
 		get_tree().quit()
-	print("camera pos: ", $Camera2D.position)
-	print("camera offset: ", $Camera2D.offset)
 
 func moveCamera():
 	var animationName: String
@@ -48,8 +48,6 @@ func moveCamera():
 		return
 	animationName = self.cam.cameraMovements[timeLastPosition]
 	$cameraAnimation.play(animationName)
-	#To check that the animation called is the right one
-	#print(animationName)
 
 func handlePovCamera(animationName: String):
 	var remoteTransform = $Time/RemoteTransform2D
@@ -58,8 +56,9 @@ func handlePovCamera(animationName: String):
 	await $cameraAnimation.animation_finished
 	remoteTransform.remote_path = "../../Camera2D"
 	
-func _on_time_is_moving(timePosition, tileLength, direction):
+func _on_time_is_moving(timePosition, tileLength, direction, is_a_jump):
 	var destination : Vector2
+	var move_to: Vector2
 
 	if (direction == dir.UP):
 		destination = timePosition - Vector2(0, tileLength)
@@ -69,6 +68,7 @@ func _on_time_is_moving(timePosition, tileLength, direction):
 		destination = timePosition - Vector2(tileLength, 0)
 	elif (direction == dir.RIGHT):
 		destination = timePosition + Vector2(tileLength, 0)
+	move_to = destination
 	destination = $TileMap.local_to_map(destination)
 	if (obstacles.find(Vector2i(destination)) != -1):
 		timeCanMove = false
@@ -78,8 +78,8 @@ func _on_time_is_moving(timePosition, tileLength, direction):
 	else:
 		timeLastPosition = timePosition
 		timeCanMove = true
-	#prints camera position at every step
-	#print("camera", $Camera2D.position)
+	if (self.timeCanMove):
+		$Time.move(move_to, is_a_jump)
 
 func _on_time_died():
 	reset()
